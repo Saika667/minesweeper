@@ -1,85 +1,90 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import styled from "styled-components";
-import { generateGrid, generateMines } from "../feature/game.slice";
+import { generateGrid, generateMines, resetTimer } from "../feature/game.slice";
 import ArrowComponent from "./ArrowComponent";
 
 const ListContainer = styled.div`
-    display: none;
-    overflow: hidden;
-    margin: 0 1em;
-    background: white;
     background-color: white;
-    box-shadow: inset -1px -1px 0 #f5f5f5, inset 1px 1px 0 #a6a6a6, 2px 2px 0 #5a5a5a;
+    height: fit-content;
+    padding: .3em;
+    font-size: 1.3em;
+    margin: .5em 0 .5em .5em;
     position: relative;
-    width: 12em;
+    z-index: 100;
 
-    @media only screen and (max-width: 768px) {
-        display: flex; 
+    @media only screen and (min-width: 1024px) {
+        display: none;
     }
 `
-const List = styled.select`
+
+const ButtonList = styled.div`
+    display: flex;
+`
+
+const ChoiceContainer = styled.div`
+    display: none;
+    flex-direction: column;
+    background: white;
+    position: absolute;
     width: 100%;
-    height: 1.5em;
-    font-family: 'VT323', sans-serif;
-    font-size: 1.5em;
-    padding-left: .5em;
-    appearance: none;
-    border: none;
-    box-shadow: none;
-    background-color: transparent;
-    background-image: none;
+    left: 0;
+
+    &.isVisible {
+        display: flex;
+    }
+`
+
+const Choice = styled.div`
+    padding: 0.2em .3em;
     cursor: pointer;
-    z-index: 1;
-
-    &:focus{
-        outline: none;
-    }
-`
-
-const ListElt = styled.option`
-
-`
-
-const ArrowComponentElt = styled(ArrowComponent)`
-    &.isHover {
-        background-color: blue;
-    }
 `
 
 function DifficultyList() {
     const dispatch = useDispatch();
+    const [isVisible, setIsVisible] = useState(false);
 
     function handleClick(difficulty) {
+        console.log(difficulty)
         dispatch(generateGrid(difficulty));
         dispatch(generateMines(difficulty));
+        dispatch(resetTimer());
+        setIsVisible(false);
     }
     const selectDifficulty = useSelector(({gameGrid}) => gameGrid.difficulty);
 
     return (
         <ListContainer>
-            <List onChange={(evt) => handleClick(evt.target.value)} >
-                <ListElt 
+            <ButtonList onClick={() => {setIsVisible(!isVisible)}}>
+                Difficulté
+                <ArrowComponent />
+            </ButtonList>
+
+            <ChoiceContainer className={isVisible ? 'isVisible' : ''}>
+                <Choice
+                    onClick={() => handleClick('easy')}
                     value='easy' 
                     className={`${selectDifficulty === 'easy' ? 'active' : ''}`}
                 >
                     Facile
-                </ListElt>
+                </Choice>
 
-                <ListElt 
+                <Choice
+                    onClick={() => handleClick('medium')}
                     value='medium'
                     className={`${selectDifficulty === 'medium' ? 'active' : ''}`}
                 >
                     Moyen
-                </ListElt>
+                </Choice>
 
-                <ListElt 
+                <Choice
+                    onClick={() => handleClick('hard')}
                     value='hard'
                     className={`${selectDifficulty === 'hard' ? 'active' : ''}`}
                 >
                     Difficile
-                </ListElt>
-            </List>
-            <ArrowComponentElt />
+                </Choice>
+            </ChoiceContainer>
         </ListContainer>
     )
 }

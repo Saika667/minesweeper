@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import CellComponent from "./CellComponent";
 
@@ -8,6 +8,10 @@ const GridContainer = styled.div`
     align-items: center;
     width: fit-content;
     margin: auto;
+
+    @media only screen and (max-width: 768px) {
+        margin: 0;
+    }
 `
 
 const Grid = styled.div`
@@ -41,8 +45,6 @@ function getCellColor(colIndex, rowIndex) {
 
 function GridComponent() {
     const grid = useSelector(({ gameGrid }) => gameGrid.grid);
-    //const dispatch = useDispatch();
-
 
 // i % 2 === 0 si c'est impair, i % 2 === 1 si c'est pair
     return (

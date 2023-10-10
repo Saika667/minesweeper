@@ -3,7 +3,6 @@ import styled from "styled-components";
 const FlagContainer = styled.div`
     width: 1.9em;
     height: 1.9em;
-    //background-color: pink;
     position: relative;
 `
 
@@ -43,11 +42,6 @@ const Flag = styled.div`
         height: .5em;
         border-radius: 0 104% 0 0;
         background:  radial-gradient(circle at 50% 151%,transparent 56%,#d4082d 35%);
-
-        //width: .6em;
-        //height: .3em;
-        //border-radius: 50%;
-        //background: #d4082d;
         position: absolute;
         top: 0;
         left: 1em;

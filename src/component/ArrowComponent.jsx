@@ -5,9 +5,7 @@ const ArrowContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    position: absolute;
-    top: .5em;
-    right: .5em;
+    margin: 0 0 0 0.8em;
 `
 
 const Arrow = styled.div.attrs(props => ({

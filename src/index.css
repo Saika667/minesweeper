@@ -5,6 +5,8 @@ body {
   font-family: 'VT323','Segoe UI', 'Roboto', 'Oxygen', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* fonction max permet de récupérer la plus grande valeur des valeurs proposées */
+  width: max(100vw, fit-content);
 }
 
 code {
